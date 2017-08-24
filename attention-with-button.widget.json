@@ -1,0 +1,29 @@
+{
+    "author": "Jason Jones",
+    "name": "Attention With Button",
+    "description": "",
+    "settings": [
+        {
+            "type": "item",
+            "label": "openHAB Item",
+            "id": "item"
+        },
+        {
+            "type": "string",
+            "id": "buttonText",
+            "label": "Button Text"
+        },
+        {
+            "type": "string",
+            "id": "buttonValue",
+            "label": "Button Value"
+        },
+        {
+            "type": "string",
+            "id": "attentionValue",
+            "label": "Attention Value",
+            "description": "If the item state matches this value, then the widget will blink."
+        }
+    ],
+    "template": "<style>\n\t.attention-active {\n    animation-name: attention;\n    animation-duration: 3s;\n    animation-iteration-count: infinite;\n  }\n  @keyframes attention {\n    20%  {background-color: transparent;}\n    60%  {background-color: #CCCC00;}\n\t}\n  .attention-table {\n  \twidth: 100%;\n  }\n  .attention-table-cell {\n  \tpadding: 5px;\n  \twidth: 50%;\n  }\n  .attention-table-btn {\n  \twidth: 100%;\n  }\n</style>\n<div>\n  {{ngModel.name}}\n</div>\n<table class=\"attention-table\" ng-class=\"(config.attentionValue == itemState(config.item)) ? 'attention-active' : ''\">\n  <tr>\n    <td class=\"attention-table-cell\">\n      <span class=\"value\">{{itemState(config.item)}}</span>\n    </td>\n    <td class=\"attention-table-cell\">\n      <button type=\"button\" class=\"btn btn-default btn-lg attention-table-btn\" ng-click=\"sendCmd(config.item, config.buttonValue)\">\n        {{config.buttonText}}\n      </button>\n    </td>\n  </tr>\n</table>"
+}
