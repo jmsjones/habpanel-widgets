@@ -1,0 +1,48 @@
+{
+    "name": "Slider With Presets",
+    "author": "Jason Jones",
+    "description": "",
+    "settings": [
+        {
+            "type": "item",
+            "id": "item",
+            "label": "openHAB Item"
+        },
+        {
+            "type": "number",
+            "label": "Min",
+            "id": "floor",
+            "default": "0"
+        },
+        {
+            "type": "number",
+            "id": "ceil",
+            "label": "Max",
+            "default": "100"
+        },
+        {
+            "type": "number",
+            "id": "step",
+            "label": "Step",
+            "default": "1"
+        },
+        {
+            "type": "string",
+            "id": "unit",
+            "label": "Unit"
+        },
+        {
+            "type": "string",
+            "id": "presets",
+            "label": "Comma-separated Presets",
+            "default": "",
+            "description": "You can optionally use the syntax 'cmd=label' for each choice. Example: 0=Off,50=50%,100=Full"
+        },
+        {
+            "type": "checkbox",
+            "id": "unitOnPresets",
+            "label": "Show Unit On Presets"
+        }
+    ],
+    "template": "<style>\n\t.slider-presets-wrap-adjust {\n  \tmargin: -10px -10px 0px -10px;\n  }\n  .slider-presets-preset-table {\n  \twidth: 100%;\n  }\n  .slider-presets-preset-table-cell {\n  \tpadding: 5px;\n  }\n  .slider-presets-preset-table-btn {\n  \twidth: 100%;\n  }\n</style>\n<div ng-class=\"(ngModel.dontwrap) ? '' : 'slider-presets-wrap-adjust'\" ng-init=\"sliderModel = { name: ngModel.name, item: config.item, floor: config.floor, ceil: config.ceil, step: config.step, unit: config.unit }\">\n  <widget-slider ng-model=\"sliderModel\"></widget-slider>\n</div>\n<table class=\"slider-presets-preset-table\" ng-init=\"presets = config.presets.split(',')\">\n\t<tr>\n  \t<td class=\"slider-presets-preset-table-cell\" ng-style=\"{ width: (100 / presets.length) + '%' }\" ng-repeat=\"preset in presets\" ng-init=\"presetParts = preset.split('=')\">\n      <button type=\"button\" class=\"btn btn-default btn-lg slider-presets-preset-table-btn\" ng-click=\"sendCmd(config.item, presetParts[0])\">\n        {{(presetParts.length > 1) ? presetParts[1] : presetParts[0]}}<span ng-if=\"((config.unitOnPresets) && (config.unit))\">{{config.unit}}</span>\n      </button>\n    </td>\n  </tr>\n</table>"
+}
